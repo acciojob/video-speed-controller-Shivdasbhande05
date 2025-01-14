@@ -1,9 +1,37 @@
-const inputs = document.querySelectorAll('.controls input');
+const video = document.querySelector(".player_video");
+const progress = document.querySelector(".progress");
+const playerButton = document.querySelector(".player_button");
+const volumeControl = document.querySelector(".volume");
+const rewindButton = document.querySelector(".rewind");
+const forwardButton = document.querySelector(".forward");
 
-    function handleUpdate() {
-      const suffix = this.dataset.sizing || '';
-      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+isPlaying = false;
+
+function toggle () {
+    if(isPlaying){
+        video.pause();
+        playerButton.textContent = "►" ;
+        
+    } else {
+        video.play();
+        playerButton.textContent = "❚❚" ;
     }
 
-    inputs.forEach(input => input.addEventListener('change', handleUpdate));
-    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+    isPlaying = !isPlaying;
+}
+
+
+function volume () {
+    video.volume = volumeControl.value;
+}
+
+playerButton.addEventListener("click" , toggle);
+volumeControl.addEventListener("input" , volume);
+
+rewindButton.addEventListener("click" , () => {
+    video.currentTime -= 10;
+});
+
+forwardButton.addEventListener("click" , () => {
+    video.currentTime += 25;
+});
